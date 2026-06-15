@@ -1,0 +1,284 @@
+/* ORIGINAL STYLES FROM LAYOUT */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: Bisque;
+            }
+
+        .container {
+            display: grid;
+            grid-template-rows: auto auto 1fr auto;
+            height: 100vh;
+            gap: 0.1rem;
+            }
+
+        .header{
+            background-color: Crimson;
+            color: black;
+            padding: 0rem;
+            text-align: center;
+            font-size: 1.2rem;
+            }
+
+        .navigation{
+            background-color: Cyan;
+            color: black;
+            }
+
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.1rem;
+            padding: 0.1rem;
+            overflow: hidden; /* Prevent internal scrolling on desktop */
+            padding-bottom: 0rem;
+            }
+
+        .content div {
+            height:auto;
+            background-color: lightblue;
+            overflow-y: auto;
+            margin-bottom: 0.1rem;
+            color: black;
+            padding: 0.1rem;
+            text-align: left;
+            border-radius: 5px;
+            }
+        .left-column,
+        .right-column {
+            background-color: Bisque;
+            padding: 0.1rem;
+            overflow-y: auto;
+            max-height: 100vh; /* Adjust to fit viewport */
+            border: 1px solid blue;
+            }
+
+        /* Show scrollbars */
+        .left-column::-webkit-scrollbar,
+        .right-column::-webkit-scrollbar {
+            width: 10px;
+            }
+
+        .left-column::-webkit-scrollbar-thumb,
+        .right-column::-webkit-scrollbar-thumb {
+            background-color: #999;
+            }
+
+        .footer {
+            background-color: black;
+            color: white;
+            text-align: center;
+            gap: 0.1rem;
+            }
+ 
+
+        @media (max-width: 768px) {
+            .content {
+                display: block; /* Stack naturally */
+                overflow: auto; /* Allow page scroll */
+                }
+
+            .left-column,
+            .right-column {
+                max-height: none;     /* Let content grow naturally */
+                overflow-y: visible;  /* Disable individual scrollbars */
+                }
+            }
+            
+        @media (max-width: 900px) {
+            .container {
+                display: block; /* Stack naturally */
+                overflow: auto; /* Allow page scroll */
+                }
+                max-height: none;     /* Let content grow naturally */
+                overflow-y: visible;  /* Disable individual scrollbars */
+                }
+            }
+
+        .menuList {
+            background: black;
+            color: yellow;
+            }
+            
+        .navbar {
+            display: flex;
+            flex-wrap: wrap;
+            background-color: cyan;
+            }
+
+        .navbar a {
+            padding: 14px 16px;
+            text-decoration: none;
+            color: black;
+            font-weight: bold;
+            }
+            
+        .navbar a:hover {
+            background-color: green;
+            color: white;
+            }
+            
+        .dropdown {
+            position: relative;
+            font-family: Arial, sans-serif;
+            }
+            
+        .dropbtn {
+            background: cyan;
+            color: black;
+            border: none;
+            padding: 14px 16px;
+            font-weight: bold;
+            cursor: pointer;
+            }
+            
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: AliceBlue;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px black;
+            z-index: 1;
+            }
+            
+        .dropdown-content a {
+            display: block;
+            padding: 12px 16px;
+            text-decoration: none;
+            color: black;
+            }
+            
+        .dropdown-content a:hover {
+            background-color: LightPink;
+            }
+            
+        .dropdown:hover .dropdown-content {
+            display: block;
+            }
+            
+        section {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 2px solid blue;
+            background-color: bisque;
+            }
+        .menu{
+            color:blue;
+            font-size:18px;
+            font-weight:bold; 
+            padding-left:3px;
+            }
+
+/* ADDITION STYLES FROM PREVIOUS CSS INCLUDING PERSONAL DEVELOPMENT */
+
+       #box-base {
+            width: 50%;
+            margin: 20px 0;
+            border: 3px solid blue;
+            padding: 0px 0px 0px 5px;
+            background-color: Bisque;
+            }
+
+        #box-txt{ 
+            margin: 0px;
+            padding: 0px; 
+            background-color: Khaki;
+            border: 1px solid blue; 
+            width: 50%; 
+            height: auto; 
+             } /* resizing a box */
+
+        .my-line {
+            height: 2px;
+            width: 100%;
+            background-color: crimson;
+            border: none;
+            }
+
+    .pic-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .pic-column {
+      flex: 1 1 100%;
+    }
+
+    .pic-column img {
+      width: 100%;
+      margin-top: 8px;
+      vertical-align: middle;
+      border-radius: 4px;
+    }
+
+/* PERSONAL FONT ADDITION */
+
+/* dark colors for light backgroundD */
+    .black {color: Black;} 
+    .brown {color: Maroon;}  
+    .blue {color: Blue;}
+    .gray {color: Gray;} 
+    .green {color: DarkGreen;} 
+    .purple {color: DarkViolet;} 
+    .red{color: Red;} 
+    .white {color: White;} 
+    .yellow { color: Gold; } 
+
+/* bold colors */
+    .blackB {
+        color: Black;
+        font-weight:bold;
+        }
+    .blueB {
+        color: Blue;
+        font-weight:bold;
+        }
+    .greenB {
+        color: Green;
+        font-weight:bold;
+        }
+    .purpleB {color: DarkViolet;
+        font-weight:bold;
+        }
+    .blackHead {    
+        background-color:Black;
+        color: White; 
+        font-size:18px; 
+        padding:2px;
+        }
+
+/* light colors for dark background */
+    .blackL {color: LightSlateGray;} 
+    .brownL {color: LightSalmon;}  
+    .blueL {color: Aqua;}
+    .grayL {color: LightBlue;} 
+    .greenL {color: LawnGreen;} 
+    .purpleL {color: Plum;} 
+    .redL {color: Orchid;} 
+    .whiteL {color: Azure;} 
+    .yellowL { color: Yellow; } 
+
+/* dark background for light colors */
+    .blackBk {background-color: Black;} 
+    .brownBk {background-color: LightSalmon;}  
+    .blueBk {background-color: Aqua;}
+    .grayBk {background-color: LightBlue;} 
+    .greenBk {background-color: LawnGreen;} 
+    .purpleBk {background-color: Plum;} 
+    .redBk {background-color: Orchid;} 
+    .whiteBk {background-color: Azure;} 
+    .yellowBk { background-color: Yellow; } 
+
+/* light background for dark colors */
+    .blackBkL {background-color: LightSlateGray;} 
+    .brownBkL {background-color: LightSalmon;}  
+    .blueBkL {background-color: Aqua; color:}
+    .grayBkL {background-color: LightBlue;} 
+    .greenBkL {background-color: LawnGreen;} 
+    .purpleBkL {background-color: Plum;} 
+    .redBkL {background-color: Orchid;} 
+    .whiteBkL {background-color: Azure;} 
+    .yellowBkL { background-color: Yellow;} 
+
+    

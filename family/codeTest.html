@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SPIKE Prime Spike Python Q&A</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    /* ===== ROYGBIV LABEL-ONLY MAPPING (hex values unchanged) =====
+       Each color below is labeled to its closest ROYGBIV hue.
+       Visuals are unchanged; we only reference these labels in CSS.
+    */
+    :root {
+      /* YELLOW-ish (background) */
+      --yellow-1: #fff8dc;     /* was --bg (cornsilk) */
+
+      /* RED family (accents/alerts) */
+      --red-1: #ff6347;        /* was --accent (tomato) */
+      --red-2: #ff7f50;        /* control button border (coral) */
+      --red-3: #ffe4e1;        /* controls bg (mistyrose) */
+      --red-4: #ffdab9;        /* hover peachpuff-ish */
+      --red-5: #ffa07a;        /* menu border (lightsalmon) */
+
+      /* ORANGE family (menu bg) */
+      --orange-1: #ffebcd;     /* menu button bg (blanchedalmond) */
+
+      /* GREEN family (cards/borders) */
+      --green-1: #f0fff0;      /* was --card (honeydew) */
+      --green-2: #90ee90;      /* card dashed border (lightgreen) */
+
+      /* BLUE family (question bg) */
+      --blue-1: #e6f7ff;       /* question bg (very light blue) */
+
+      /* VIOLET family (answer bg) */
+      --violet-1: #fff0f5;     /* answer bg (lavenderblush) */
+
+      /* INDIGO-ish (neutral text mapped to nearest deep hue) */
+      --indigo-ink-1: #333;    /* dark text */
+      --indigo-ink-2: #444;    /* slightly lighter text */
+      --indigo-ink-3: #555;    /* secondary text */
+    }
+
+    /* Utility classes for device toggles */
+    html.is-mobile .keyboard-instructions { display: none !important; }
+    html.is-desktop .controls { display: none !important; }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: var(--yellow-1);
+      padding: 2em;
+      text-align: center;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    h1 {
+      color: var(--red-1);
+      font-size: 2em;
+      margin-bottom: 0.5em;
+    }
+
+    .menu {
+      margin-bottom: 1em;
+    }
+
+    .menu button {
+      background-color: var(--orange-1);
+      border: 2px solid var(--red-5);
+      border-radius: 10px;
+      padding: 0.5em 1em;
+      margin: 0.2em;
+      cursor: pointer;
+      font-size: 1em;
+      touch-action: manipulation;
+    }
+
+    .template {
+      background-color: var(--green-1);
+      border: 4px dashed var(--green-2);
+      border-radius: 20px;
+      padding: 2em;
+      max-width: 600px;
+      margin: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: pan-y;
+    }
+
+    .icon {
+      font-size: 2.5em;
+      color: var(--red-1);
+      margin-bottom: 0.5em;
+      cursor: pointer; /* icon is clickable on mobile */
+      display:inline-block;
+    }
+
+    .question {
+      font-size: 1.5em;
+      color: var(--indigo-ink-1);
+      margin-bottom: 1em;
+      background-color: var(--blue-1);
+      padding: 1em;
+      border-radius: 10px;
+    }
+
+    .answer {
+      font-size: 1.3em;
+      color: var(--indigo-ink-2);
+      display: none;
+      margin-top: 1em;
+      background-color: var(--violet-1);
+      padding: 1em;
+      border-radius: 10px;
+    }
+
+    .interaction-block {
+      margin-top: 1.5em;
+    }
+
+    .keyboard-instructions {
+      font-size: 1em;
+      color: var(--indigo-ink-3);
+      margin-bottom: 1em;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: center;
+      gap: 1em;
+      flex-wrap: wrap;
+    }
+
+    .controls button {
+      background-color: var(--red-3);
+      border: 2px solid var(--red-2);
+      border-radius: 50%;
+      padding: 0.6em;
+      font-size: 1.5em;
+      cursor: pointer;
+      width: 56px;
+      height: 56px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      touch-action: manipulation;
+    }
+
+    .controls button:hover { background-color: var(--red-4); }
+
+    /* Desktop only */
+    @media (min-width: 769px) {
+      .keyboard-instructions { display: block; }
+      .controls { display: none; }
+      html.is-desktop .controls { display: none !important; }
+    }
+
+    /* Mobile only */
+    @media (max-width: 768px) {
+      .keyboard-instructions { display: none; }
+      .controls { display: flex; }
+      html.is-mobile .keyboard-instructions { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <h1><i class="fas fa-robot"></i> Spike Python Quiz!</h1>
+
+  <div class="menu" id="menu"></div>
+
+  <div class="template" id="template">
+    <div class="icon" id="icon" aria-hidden="true"><i class="fas fa-question-circle"></i></div>
+    <div class="question" id="question">Choose a group to begin!</div>
+    <div class="answer" id="answer" aria-live="polite"></div>
+  </div>
+
+  <div class="interaction-block">
+    <div class="keyboard-instructions">
+      Press <i class="fas fa-keyboard"></i> (Enter) to show the answer<br>
+      Press <i class="fas fa-arrow-right"></i> for next question<br>
+      Press <i class="fas fa-arrow-left"></i> to go back
+    </div>
+
+    <div class="controls" id="controls">
+      <button id="btnAnswer" type="button" title="Show Answer"><i class="fas fa-check-circle" aria-hidden="true"></i></button>
+      <button id="btnPrev" type="button" title="Previous"><i class="fas fa-arrow-left" aria-hidden="true"></i></button>
+      <button id="btnNext" type="button" title="Next"><i class="fas fa-arrow-right" aria-hidden="true"></i></button>
+      <button id="btnReset" type="button" title="Reset"><i class="fas fa-redo-alt" aria-hidden="true"></i></button>
+    </div>
+  </div>
+
+<script>
+  /*****************************************************************
+   * Improved mobile detection
+   *****************************************************************/
+  const isMobile = (() => {
+    const ua = navigator.userAgent || '';
+    const touch = ('ontouchstart' in window) || (navigator.maxTouchPoints && navigator.maxTouchPoints > 0);
+    const smallScreen = !!(window.matchMedia && window.matchMedia('(max-width: 768px)').matches);
+    const coarsePointer = !!(window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
+    return /Mobi|Android|iPhone|iPad|iPod/i.test(ua) || (touch && (smallScreen || coarsePointer));
+  })();
+
+  if (isMobile) document.documentElement.classList.add('is-mobile');
+  else document.documentElement.classList.add('is-desktop');
+
+  // Core state
+  let qaGroups = {};
+  let currentGroup = [];
+  let currentIndex = -1;
+
+  // DOM refs
+  const questionEl = document.getElementById('question');
+  const answerEl = document.getElementById('answer');
+  const iconEl = document.getElementById('icon');
+  const menuEl = document.getElementById('menu');
+  const templateEl = document.getElementById('template');
+
+  // controls
+  const btnAnswer = document.getElementById('btnAnswer');
+  const btnPrev = document.getElementById('btnPrev');
+  const btnNext = document.getElementById('btnNext');
+  const btnReset = document.getElementById('btnReset');
+
+  // ==== New: Load from database via PHP endpoint ====
+  fetch('spikeQA.php')
+    .then(res => {
+      if (!res.ok) throw new Error('Network response was not ok');
+      return res.json();
+    })
+    .then(rows => {
+      // rows is expected: [{qa_group, qa_question, qa_answer, qa_icon}, ...]
+      qaGroups = {};
+      rows.forEach(r => {
+        const group = (r.qa_group || '').trim();
+        const question = (r.qa_question || '').trim();
+        const answer = (r.qa_answer || '').trim();
+        const icon = (r.qa_icon || '').trim();
+        if (!group || !question) return;
+        if (!qaGroups[group]) qaGroups[group] = [];
+        qaGroups[group].push({ question, answer, icon });
+      });
+
+      if (Object.keys(qaGroups).length === 0) {
+        menuEl.innerHTML = "<p style='color:var(--red-1);'>No groups found. Check your database content.</p>";
+      } else {
+        buildMenu();
+      }
+    })
+    .catch(err => {
+      console.error('Failed to load data:', err);
+      menuEl.innerHTML = "<p style='color:var(--red-1);'>Error loading data from database.</p>";
+    });
+
+  function buildMenu() {
+    menuEl.innerHTML = '';
+    Object.keys(qaGroups).forEach(group => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.textContent = group;
+      btn.onclick = () => selectGroup(group);
+      menuEl.appendChild(btn);
+    });
+  }
+
+  function showQA(index) {
+    if (!currentGroup || index < 0 || index >= currentGroup.length) return;
+    const q = currentGroup[index];
+    questionEl.textContent = q.question;
+    answerEl.textContent = q.answer;
+    answerEl.style.display = 'none';
+    iconEl.innerHTML = `<i class="fas ${q.icon || 'fa-question-circle'}" aria-hidden="true"></i>`;
+  }
+
+  function selectGroup(groupName) {
+    currentGroup = qaGroups[groupName] || [];
+    if (currentGroup.length === 0) {
+      resetGroup();
+      return;
+    }
+    currentIndex = 0;
+    showQA(currentIndex);
+  }
+
+  function showAnswer() {
+    if (!currentGroup || currentIndex === -1) return;
+    answerEl.style.display = 'block';
+    iconEl.innerHTML = `<i class="fas fa-check-circle" aria-hidden="true"></i>`;
+  }
+
+  function nextQuestion() {
+    if (!currentGroup || currentIndex === -1) return;
+    currentIndex = (currentIndex + 1) % currentGroup.length;
+    showQA(currentIndex);
+  }
+
+  function prevQuestion() {
+    if (!currentGroup || currentIndex === -1) return;
+    currentIndex = (currentIndex - 1 + currentGroup.length) % currentGroup.length;
+    showQA(currentIndex);
+  }
+
+  function resetGroup() {
+    questionEl.textContent = "Choose a sensor group to begin!";
+    answerEl.textContent = "";
+    answerEl.style.display = 'none';
+    iconEl.innerHTML = `<i class="fas fa-question-circle" aria-hidden="true"></i>`;
+    currentGroup = [];
+    currentIndex = -1;
+  }
+
+  // Controls (clicks)
+  btnAnswer.addEventListener('click', showAnswer, {passive:true});
+  btnPrev.addEventListener('click', prevQuestion, {passive:true});
+  btnNext.addEventListener('click', nextQuestion, {passive:true});
+  btnReset.addEventListener('click', resetGroup, {passive:true});
+
+  // Icon tap shows answer on mobile/touch devices
+  iconEl.addEventListener('click', () => {
+    if (!currentGroup || currentIndex === -1) return;
+    showAnswer();
+  }, {passive:true});
+
+  // Keyboard
+  window.addEventListener('keydown', function(e) {
+    if (!currentGroup || currentIndex === -1) return;
+    if (e.key === 'ArrowRight') nextQuestion();
+    else if (e.key === 'ArrowLeft') prevQuestion();
+    else if (e.key === 'Enter') showAnswer();
+  });
+
+  // Focus safeguard (desktop)
+  if (!isMobile) {
+    document.addEventListener('focusin', function(e) {
+      const t = e.target;
+      const tag = (t && t.tagName) ? t.tagName.toUpperCase() : '';
+      if (tag === 'INPUT' || tag === 'TEXTAREA' || (t && t.isContentEditable)) {
+        return;
+      }
+      try {
+        if (t && typeof t.blur === 'function') t.blur();
+        if (document.activeElement && document.activeElement !== document.body &&
+            document.activeElement.tagName !== 'INPUT' &&
+            document.activeElement.tagName !== 'TEXTAREA' &&
+            !document.activeElement.isContentEditable) {
+          try { document.activeElement.blur(); } catch(_) {}
+        }
+      } catch (err) {}
+    }, true);
+  }
+
+  // Mobile gestures (swipe)
+  (function enableSwipe() {
+    let startX = 0, startY = 0, moved = false;
+    templateEl.addEventListener('touchstart', (e) => {
+      if (!e.touches || e.touches.length !== 1) return;
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+      moved = false;
+    }, {passive:true});
+
+    templateEl.addEventListener('touchmove', () => { moved = true; }, {passive:true});
+
+    templateEl.addEventListener('touchend', (e) => {
+      if (!e.changedTouches || e.changedTouches.length !== 1) return;
+      const dx = e.changedTouches[0].clientX - startX;
+      const dy = e.changedTouches[0].clientY - startY;
+      const absDx = Math.abs(dx), absDy = Math.abs(dy);
+
+      if (absDx > 40 && absDx > absDy) {
+        if (dx > 0) prevQuestion();
+        else nextQuestion();
+      } else {
+        if (currentGroup && currentIndex !== -1) showAnswer();
+      }
+    }, {passive:true});
+  })();
+
+  console.info('Quiz loaded. isMobile=', isMobile);
+</script>
+</body>
+</html>

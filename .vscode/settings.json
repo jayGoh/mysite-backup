@@ -1,0 +1,25 @@
+{
+  "open-php-html-js-in-browser.selectedBrowser": "Chrome",
+  "open-php-html-js-in-browser.rememberBrowserSelection": false,
+  "open-php-html-js-in-browser.urlToOpen": "http://localhost/",
+  "open-php-html-js-in-browser.documentRootFolder": "${workspaceFolder}"
+
+  "extensions.autoUpdate": false,
+  "extensions.autoCheckUpdates": false,
+  "extensions.ignoreRecommendations": true,
+  "window.restoreWindows": "all",
+
+  "editor.minimap.enabled": false,
+
+  "git.path": "../Git/cmd/git.exe",
+
+  "terminal.integrated.profiles.windows": {
+    "Clean Bash": {
+      "path": "bash.exe",
+      "args": ["--noprofile", "--norc"],
+      "env": {}
+    }
+  },
+
+  "terminal.integrated.defaultProfile.windows": "Clean Bash"
+}

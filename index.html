@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link href="Support/VSCcss/baseColor.css" rel="stylesheet" type="text/css" />
+    <link href="Support/VSCcss/baseLay.css" rel="stylesheet" type="text/css" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 400px;
+            padding: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <container>
+        <h2 class="red">Login</h2>
+        <form action="login.php" method="POST">
+            E-mail: <input type="text" name="mememail" size="60px" px>
+            <br>
+            <br>
+            <br>
+            Password:
+            <input type="password" name="mempass" size="60px">
+            <br>
+            <br>
+            <br>
+			<input type="submit" value="Login">
+        </form>
+    </container>
+</body>
+
+</html>

@@ -1,0 +1,20 @@
+{
+  "extensions.autoUpdate": false,
+  "extensions.autoCheckUpdates": false,
+  "extensions.ignoreRecommendations": true,
+  "window.restoreWindows": "all",
+
+  "editor.minimap.enabled": false,
+
+  "git.path": "../Git/cmd/git.exe",
+
+  "terminal.integrated.profiles.windows": {
+    "Clean Bash": {
+      "path": "bash.exe",
+      "args": ["--noprofile", "--norc"],
+      "env": {}
+    }
+  },
+
+  "terminal.integrated.defaultProfile.windows": "Clean Bash"
+}
